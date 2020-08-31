@@ -1,4 +1,4 @@
-const PATH = "\\Users\\Nicole\\Documents\\JsPhoto\\";
+const PATH = "\\Users\\Nicole\\Documents\\caterpillar_nametags\\";
 const SAVE_QUALITY = 12;
 const NUM_SQUARES = 12;
 
@@ -37,8 +37,35 @@ var girls = [
     { first: 'Ella', last: 'Trompeter', gender: 'G'},
 ];
 
-small_names();
-big_names();
+// parseNames();
+// small_names();
+// big_names();
+growth_chart();
+
+function parseNames() {
+    var boy_duplicates = new Map();
+    // var girl_duplicates = new Map();
+
+    for (var i = 0; i < boys.length; ++i) {
+        if (boy_duplicates.has(boys[i])) {
+            boy_duplicates.set(boys[i], true);
+        } else {
+            boy_duplicates.set(boys[i], false);
+        }
+    }
+
+    // for (var i = 0; i < girls.length; ++i) {
+    //     if (girl_duplicates.has(girls[i])) {
+    //         girl_duplicates.set(girls[i], true);
+    //     } else {
+    //         girl_duplicates.set(girls[i], false);
+    //     }
+    // }
+
+    boy_duplicates.forEach(function(value, key) {
+        alert(key + ' = ' + value);
+    })
+}
 
 function small_names() {
     // Set up the document with the proper doc information
@@ -84,7 +111,7 @@ function big_names() {
 
     // Run the automation for each caterpillar version
     caterpillarSet(docInfo[0], boyNumSpaces, 'B', true);  // boys - full names
-    caterpillarSet(docInfo[0], girlNumSpaces, 'G', true);  // girls - full names
+    caterpillarSet(docInfo[0], girlNumSpaces, 'G', true); // girls - full names
 
     saveDoc(docName, docInfo[0].docCount);
 
@@ -134,12 +161,63 @@ function caterpillarSet(docInfo, numSpaces, gender, isFullName) {
     }
 }
 
+function growth_chart() {
+    // Set up the document with the proper doc information
+    var docName = "Caterpillar_growth_chart_";
+    var fileRef = File(PATH + "templates\\" + docName + "template.psd");
+    var docFile = open(fileRef);
+    toggleLayerVisibility(docFile, false);
+
+    var docInfo = [{
+        docRef: docFile,
+        docName: docName,
+        docCount: 1,
+        spaceCount: 0,
+    }];
+    var numSpaces = 12;
+
+    // Run the automation
+    growth_chart_work(docInfo[0], numSpaces, boys);  // boys
+    growth_chart_work(docInfo[0], numSpaces, girls); // girls
+
+    saveDoc(docName, docInfo[0].docCount);
+
+    docFile.close(SaveOptions.DONOTSAVECHANGES);
+}
+
+function growth_chart_work(docInfo, numSpaces, nameList) {
+    var nameCount = 0;
+
+    for (; nameCount < nameList.length; ++nameCount) {
+        // If the page is full, save the document and clear the page
+        if (docInfo.spaceCount === numSpaces) {
+            saveDoc(docInfo.docName, docInfo.docCount);
+            ++docInfo.docCount;
+            docInfo.spaceCount = 0;
+            toggleLayerVisibility(docInfo.docRef, false);
+        }
+
+        // Make the appropriate layers visible
+        docInfo.docRef.layers['caterpillar' + docInfo.spaceCount].visible = true;
+        docInfo.docRef.layers['name' + docInfo.spaceCount].visible = true;
+
+        // Insert the next name
+        docInfo.docRef.layers["name" + docInfo.spaceCount].textItem.contents = nameList[nameCount].first;
+
+        ++docInfo.spaceCount;
+    }
+}
+
 function toggleLayerVisibility(docRef, boolVal) {
     for (var set = 0; set < docRef.layerSets.length; ++set) {
         docRef.layerSets[set].visible = true;
         for (var layer = 0; layer < docRef.layerSets[set].layers.length; ++layer) {
             docRef.layerSets[set].layers[layer].visible = boolVal;
         }
+    }
+
+    for (var layer = 0; layer < docRef.layers.length; ++layer) {
+        docRef.layers[layer].visible = boolVal;
     }
 }
 
@@ -151,8 +229,8 @@ function saveDoc(title, docCount) {
     activeDocument.saveAs(jpgFile, jpgSaveOptions, true, Extension.LOWERCASE);
 
     // Save a photoshop version
-    // psdFile = new File(PATH + "output\\" + title + docCount + ".psd");
-    // activeDocument.saveAs(psdFile);
+    psdFile = new File(PATH + "output\\" + title + docCount + ".psd");
+    activeDocument.saveAs(psdFile);
 }
 
 // https://www.adobe.com/content/dam/acom/en/devnet/photoshop/scripting/photoshop-cc-scripting-guide.pdf
@@ -199,7 +277,6 @@ function saveDoc(title, docCount) {
 // TODO
 // Accommodate long names
 // Read in from excel or text file
-// Automate big caterpillars
 
 // 151 -> 81 -> 58(22)
 // Total line count 142
