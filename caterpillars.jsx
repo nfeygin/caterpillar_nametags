@@ -1,49 +1,36 @@
-const PATH = "\\Users\\Nicole\\Documents\\caterpillar_nametags\\";
+const PATH = "O:\\Katrine's_School_Stuff\\Caterpillar_Names_Program\\";
 const SAVE_QUALITY = 12;
 const NUM_SQUARES = 12;
 
 var boys = [
-    { first: 'Anthony', last: 'Queen', gender: 'B'},
-    { first: 'Brayden', last: 'Munro', gender: 'B'},
-    { first: 'Charlie', last: 'Aronoff', gender: 'B'},
-    { first: 'Daniel', last: 'Macy', gender: 'B'},
-    { first: 'Dominic', last: 'Urikh', gender: 'B'},
-    { first: 'Dov', last: 'Friedman', gender: 'B'},
-    { first: 'Elliott', last: 'Luther', gender: 'B'},
-    { first: 'Jeremy', last: 'Garrett', gender: 'B'},
-    { first: 'Jonah', last: 'Rubin', gender: 'B'},
-    { first: 'Liam', last: 'Mcarleton', gender: 'B'},
-    { first: 'Max', last: 'Friedenberg', gender: 'B'},
-    { first: 'Jonah', last: 'Rubin', gender: 'B'},
-    { first: 'Dominic', last: 'Urikh', gender: 'B'},
-    // { first: 'Elliott', last: 'Luther', gender: 'B'},
+    { first: 'Anthony', last: 'Pauwels', gender: 'B'},
+    { first: 'Brooks', last: 'Levin', gender: 'B'},
+    { first: 'Daniel', last: 'Uvaydov', gender: 'B'},
+    { first: 'Jacob', last: 'Mellin', gender: 'B'},
+    { first: 'Jacob', last: 'Sherman', gender: 'B'},
+    { first: 'Jaxon', last: 'Wallace', gender: 'B'},
+    { first: 'Kambell', last: 'Kirshman', gender: 'B'},
+    { first: 'Liam', last: 'Rickli', gender: 'B'},
+    { first: 'Parker', last: 'Meisel', gender: 'B'},
+    { first: 'Zevi', last: 'Anderson', gender: 'B'},
 ];
 var girls = [
-    { first: 'Annabel', last: 'Brand', gender: 'G'},
-    { first: 'Elise', last: 'Cohen', gender: 'G'},
-    { first: 'Ella', last: 'Trompeter', gender: 'G'},
-    { first: 'Fiona', last: 'Leider', gender: 'G'},
-    { first: 'Gina', last: 'Gershonowicz', gender: 'G'},
-    { first: 'Judy', last: 'Montingelli', gender: 'G'},
-    { first: 'Kayla', last: 'Lerman', gender: 'G'},
-    { first: 'Orlee', last: 'Beale', gender: 'G'},
-    { first: 'Pearl', last: 'Schwartz', gender: 'G'},
-    { first: 'Bellarose', last: 'Weinstock', gender: 'G'},
-    { first: 'Kayla', last: 'Lerman', gender: 'G'},
-    { first: 'Bellarose', last: 'Weinstock', gender: 'G'},
-    { first: 'Annabel', last: 'Brand', gender: 'G'},
-    { first: 'Elise', last: 'Cohen', gender: 'G'},
-    { first: 'Ella', last: 'Trompeter', gender: 'G'},
-    { first: 'Ella', last: 'Trompeter', gender: 'G'},
+    { first: 'Beatrice', last: 'Wiesenthal', gender: 'G'},
+    { first: 'Lincoln', last: 'Diem', gender: 'G'},
+    { first: 'Maya', last: 'Benoliel', gender: 'G'},
+    { first: 'Olivia', last: 'Israilov', gender: 'G'},
+    { first: 'Rachel', last: 'Billiau', gender: 'G'},
+    { first: 'Shayna', last: 'Shlom', gender: 'G'},
+    { first: 'Sophie', last: 'Starr', gender: 'G'},
 ];
 
 // parseNames();
-// small_names();
-// big_names();
+small_names();
+big_names();
 growth_chart();
 
 function parseNames() {
-    var boy_duplicates = new Map();
+    // var boy_duplicates = new Map();
     // var girl_duplicates = new Map();
 
     for (var i = 0; i < boys.length; ++i) {
